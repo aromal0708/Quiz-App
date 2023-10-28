@@ -2,14 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { QuestionContext } from "../contexts/QuestionContext";
 import { decode } from "html-entities";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { useAxios } from "../hooks/useAxios";
 
 const Questions = () => {
@@ -69,7 +62,7 @@ const Questions = () => {
   if (loading) {
     return (
       <Box mt={20}>
-        <LinearProgress />
+        <CircularProgress />
       </Box>
     );
   }

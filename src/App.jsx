@@ -10,14 +10,14 @@ function App() {
     <BrowserRouter>
       <Container maxWidth="sm">
         <Box textAlign="center" mt={5}>
-        <Typography variant="h2" fontWeight="bold" mt={3}>
-          Quiz
-        </Typography>
-        <Routes>
-          <Route path="/" element={<Settings />} exact />
-          <Route path="/score" element={<Score />} />
-          <Route path="/questions" element={<Questions />} />
-        </Routes>
+          <Typography variant="h2" fontWeight="bold" mt={3}>
+            Quiz
+          </Typography>
+          <Routes>
+            <Route path="/" element={<Settings />} exact />
+            <Route path="/score" element={<Score />} />
+            <Route path="/questions" element={<Questions />} />
+          </Routes>
         </Box>
       </Container>
     </BrowserRouter>

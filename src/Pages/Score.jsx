@@ -1,6 +1,5 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button,Typography } from "@mui/material";
-import { decode } from "html-entities";
 import { useContext } from "react";
 import { QuestionContext } from "../contexts/QuestionContext";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,7 @@ const Score = () => {
   return (
     <>
       <Box mt={20}>
-        <Typography variant="h2">
+        <Typography variant="h5">
           Your Score : {settings.score}/{settings.amount_of_question}
         </Typography>
         <Box mt={2}>
