@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { QuestionContext } from "../contexts/QuestionContext";
 import { decode } from "html-entities";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ const Questions = () => {
   const navigate = useNavigate();
   let apiUrl = `/api.php?amount=${settings?.amount_of_question}&category=${settings?.question_category}&difficulty=${settings?.question_difficulty}&type=${settings?.question_type}`;
   const { response, error } = useAxios({ url: apiUrl });
+  console.log(response);
 
   // STATES
   const [index, setIndex] = useState(0);
@@ -32,6 +34,18 @@ const Questions = () => {
       setSettings({ ...settings, score });
       navigate("/score");
     }
+  };
+
+  const handleReturn = () => {
+    setSettings({
+      ...settings,
+      question_category: "",
+      question_difficulty: "",
+      question_type: "",
+      score: 0,
+    });
+    navigate("/");
+    window.location.reload();
   };
 
   // USESTATE FUNCTION
@@ -58,7 +72,6 @@ const Questions = () => {
     }
     return shuffledArray.slice(0, 4); // Return the first 4 elements
   };
-
   if (loading) {
     return (
       <Box mt={20}>
@@ -66,6 +79,7 @@ const Questions = () => {
       </Box>
     );
   }
+
   if (error) {
     return (
       <Box mt={20}>
@@ -73,27 +87,49 @@ const Questions = () => {
       </Box>
     );
   }
+  if (response.results.length === 0) {
+    <Box mt={20}>
+      <Typography variant="h3">SomeThing Went Wrong..!</Typography>
+    </Box>;
+  }
 
   return (
-    <Box mt={4}>
-      <Typography variant="h3">Question {index + 1}</Typography>
-      <Typography variant="h5" mt={5}>
-        {decode(response?.results[index]?.question)}
-      </Typography>
-
-      <Grid my={3} container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {options.map((data, index) => (
-          <Grid key={index} my={1} item xs={6}>
-            <Button onClick={handleClick} fullWidth variant="contained">
-              {decode(data)}
+    <>
+      {response.results.length === 0 ? (
+        <Box mt={20}>
+          <Typography variant="h3">SomeThing Went Wrong..!</Typography>
+          <Box mt={2}>
+            <Button
+              onClick={handleReturn}
+              startIcon={<ArrowForwardIcon />}
+              variant="outlined"
+            >
+              Return to Home Screen
             </Button>
+          </Box>
+        </Box>
+      ) : (
+        <Box mt={4}>
+          <Typography variant="h3">Question {index + 1}</Typography>
+          <Typography variant="h5" mt={5}>
+            {decode(response?.results[index]?.question)}
+          </Typography>
+
+          <Grid my={3} container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            {options.map((data, index) => (
+              <Grid key={index} my={1} item xs={6}>
+                <Button onClick={handleClick} fullWidth variant="contained">
+                  {decode(data)}
+                </Button>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Typography mt={5} variant="h6">
-        Score : {score}/{response?.results.length}
-      </Typography>
-    </Box>
+          <Typography mt={5} variant="h6">
+            Score : {score}/{response?.results.length}
+          </Typography>
+        </Box>
+      )}
+    </>
   );
 };
 
