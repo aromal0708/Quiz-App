@@ -87,7 +87,7 @@ const Questions = () => {
       </Box>
     );
   }
-  if (response.results.length === 0) {
+  if (response?.results?.length === 0) {
     <Box mt={20}>
       <Typography variant="h3">SomeThing Went Wrong..!</Typography>
     </Box>;
@@ -95,7 +95,7 @@ const Questions = () => {
 
   return (
     <>
-      {response.results.length === 0 ? (
+      {response?.results?.length === 0 ? (
         <Box mt={20}>
           <Typography variant="h3">SomeThing Went Wrong..!</Typography>
           <Box mt={2}>
