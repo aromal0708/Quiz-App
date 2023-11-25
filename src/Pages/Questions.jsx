@@ -50,7 +50,7 @@ const Questions = () => {
 
   // USESTATE FUNCTION
   useEffect(() => {
-    if (response?.results.length) {
+    if (response?.results?.length) {
       const question = response.results[index];
       const answers = [question.correct_answer, ...question.incorrect_answers];
       const shuffledAnswers = shuffleArray(answers);
